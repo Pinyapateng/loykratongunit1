@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loy Krathong: Critical Reading Foundations & Interactive Lesson</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap">
+  
+  <style>
+    body {
+      font-family: 'Sarabun', 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b0f19;
+      color: #f3f4f6;
+    }
+    .font-en {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #1e293b;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .audio-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-amber-500 selection:text-slate-900">
+
+  <!-- TOP NAVBAR -->
+  <header class="bg-slate-900/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md px-4 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <div class="bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 p-2 rounded-lg font-bold text-lg flex items-center justify-center w-10 h-10 shadow-lg">
+        <i class="fa-solid fa-water"></i>
+      </div>
+      <div>
+        <h1 class="font-bold text-base md:text-lg text-slate-100 font-en tracking-tight">Loy Krathong: Critical Reading</h1>
+        <p class="text-xs text-amber-400 font-medium">Unit 1: Foundations, Models & Strategies (ม.4)</p>
+      </div>
+    </div>
+
+    <!-- Navigation Control Buttons -->
+    <div class="flex items-center space-x-2">
+      <button onclick="toggleAudioSpeed()" id="speedBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+        <i class="fa-solid fa-gauge-high text-amber-400"></i>
+        <span>Speed: 1.0x</span>
+      </button>
+      <button onclick="stopSpeech()" class="text-xs bg-red-950/60 hover:bg-red-900 text-red-300 px-3 py-1.5 rounded-lg border border-red-800/50 transition flex items-center gap-1.5">
+        <i class="fa-solid fa-square"></i>
+        <span>Stop Audio</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- LEFT / MAIN: SLIDE DISPLAY (8 COLS) -->
+    <div class="lg:col-span-8 flex flex-col space-y-4">
+      
+      <!-- SLIDE CARD BOX -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col justify-between min-h-[500px] relative">
+        
+        <!-- Slide Header Bar -->
+        <div class="bg-slate-800/80 px-6 py-3 border-b border-slate-700/60 flex justify-between items-center">
+          <div class="flex items-center space-x-2">
+            <span class="bg-amber-500/20 text-amber-400 text-xs font-bold px-2.5 py-1 rounded border border-amber-500/30" id="slideCategory">
+              SLIDE 1 OF 12
+            </span>
+            <span class="text-xs text-slate-400 hidden sm:inline" id="slideTopic">Topic Overview</span>
+          </div>
+          <button onclick="speakSlideTitle()" class="text-xs text-amber-400 hover:text-amber-300 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-volume-high"></i> Listen Slide Title
+          </button>
+        </div>
+
+        <!-- Slide Body (Dynamic Content Container) -->
+        <div id="slideContent" class="p-6 md:p-8 flex-1 flex flex-col justify-center">
+          <!-- Content injected dynamically via JS -->
+        </div>
+
+        <!-- Slide Bottom Toolbar & Pagination -->
+        <div class="bg-slate-950/90 px-6 py-4 border-t border-slate-800 flex justify-between items-center">
+          <button onclick="prevSlide()" id="prevBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold border border-slate-700 flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed transition">
+            <i class="fa-solid fa-chevron-left"></i> Previous
+          </button>
+
+          <div class="flex items-center space-x-1.5" id="dotsContainer">
+            <!-- Pagination dots generated by JS -->
+          </div>
+
+          <button onclick="nextSlide()" id="nextBtn" class="bg-amber-600 hover:bg-amber-500 text-slate-950 px-4 py-2 rounded-xl text-sm font-bold shadow-lg shadow-amber-600/20 flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed transition">
+            Next <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- SLIDE EXPLANATION & TRANSLATION PANEL -->
+      <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-700/60 pb-2">
+          <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+            <i class="fa-solid fa-chalkboard-user"></i> คำอธิบายสไลด์ & คำแปล (Slide Explanation & Translation)
+          </h3>
+          <button onclick="speakExplanation()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1 transition">
+            <i class="fa-solid fa-volume-high text-amber-400"></i> ฟังคำอธิบายภาษาไทย
+          </button>
+        </div>
+        <p id="slideExplanation" class="text-sm text-slate-300 leading-relaxed">
+          <!-- Explanation content injected via JS -->
+        </p>
+      </div>
+    </div>
+
+    <!-- RIGHT: VOCABULARY & STRATEGY HELPER (4 COLS) -->
+    <div class="lg:col-span-4 flex flex-col space-y-4">
+
+      <!-- VOCABULARY CARD LIST -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col h-full max-h-[640px]">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-3">
+          <div>
+            <h3 class="font-bold text-base text-slate-100 flex items-center gap-2">
+              <i class="fa-solid fa-spell-check text-amber-400"></i> Key Vocabulary
+            </h3>
+            <p class="text-xs text-slate-400">คำศัพท์สำคัญ คำอ่าน และความหมาย</p>
+          </div>
+          <span class="text-xs bg-amber-500/10 text-amber-400 px-2.5 py-1 rounded-full font-mono border border-amber-500/20" id="vocabCount">0 Words</span>
+        </div>
+
+        <div id="vocabList" class="space-y-3 overflow-y-auto custom-scrollbar flex-1 pr-1">
+          <!-- Vocab Cards injected via JS -->
+        </div>
+      </div>
+
+      <!-- STRATEGY TOOLTIP BOX -->
+      <div class="bg-gradient-to-br from-slate-900 to-amber-950/30 border border-amber-500/20 rounded-2xl p-4 flex items-start space-x-3">
+        <div class="text-amber-400 text-xl pt-0.5">
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <div class="space-y-1">
+          <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider">Unit 1 Reading Tip</h4>
+          <p id="strategyTip" class="text-xs text-slate-300 leading-relaxed">
+            การอ่านเชิงวิจารณ์ (Critical Reading) ใน Unit 1 เน้นการวิเคราะห์ทั้งเรื่องข้อเท็จจริง เจตนาผู้เขียน และการเชื่อมโยงความรู้เดิม (Schema)
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 border-t border-slate-900 py-3 text-center text-xs text-slate-500">
+    <p>Loy Krathong Critical Reading Interactive Lesson • Designed for Grade 10 (ม.4) English Reading Course</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // DATA MATRIX: 12 SLIDES WITH COMPLETE EN/TH TRANSLATION, AUDIO, VOCAB & EXPLANATIONS
+    const slidesData = [
+      {
+        id: 1,
+        category: "SLIDE 1 OF 12",
+        topic: "Title & Cover Page",
+        title: "Loy Krathong: Reading Foundations & Strategies",
+        subtitle: "Applying Critical Reading Strategies (Unit 1): Reading Models, Schema Theory, Implied Main Ideas & Context Clues",
+        contentHtml: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <div class="space-y-4">
+              <span class="inline-block bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-semibold px-3 py-1 rounded-md">
+                การนำเสนอวิชาการอ่านภาษาอังกฤษเชิงวิจารณ์ (ม.4)
+              </span>
+              <h1 class="text-3xl md:text-4xl font-extrabold text-slate-50 font-en leading-tight">
+                Loy Krathong: <br><span class="text-amber-400">Reading Foundations</span> & Strategies
+              </h1>
+              <p class="text-sm text-slate-300 leading-relaxed font-en">
+                An interactive analysis of Loy Krathong passage using Unit 1 Reading Foundations.
+              </p>
+              <div class="pt-2 flex items-center gap-3">
+                <button onclick="speakText('Loy Krathong: Reading Foundations and Strategies. Applying Critical Reading Strategies in Unit 1.')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 transition audio-btn">
+                  <i class="fa-solid fa-volume-high"></i> Listen Overview
+                </button>
+              </div>
+            </div>
+            <div class="rounded-xl overflow-hidden border border-slate-700 shadow-xl max-h-64">
+              <img src="https://santiburisamui.com/wp-content/uploads/2025/10/loy-krathong-profile-banner.jpg" alt="Loy Krathong Festival Night" class="w-full h-full object-cover">
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 1 (หน้าปก):</b> สไลด์นี้เป็นหน้าปกนำเสนอผลงานเรื่อง 'Loy Krathong' ซึ่งเป็นการประยุกต์ใช้ความรู้จากบทที่ 1 (Unit 1: Reading Foundations & Strategies) วิชาการอ่านภาษาอังกฤษเชิงวิจารณ์ ระดับชั้น ม.4",
+        vocab: [
+          { word: "Foundation", pos: "n.", ipa: "/ฟาอุน-เด-ชัน/", th: "พื้นฐาน / รากฐาน", sample: "Reading foundations help students understand texts deeply." },
+          { word: "Strategy", pos: "n.", ipa: "/สแตร-เท-จี/", th: "กลยุทธ์ / วิธีการ", sample: "Using context clues is a helpful reading strategy." },
+          { word: "Critical Reading", pos: "n.", ipa: "/คริ-ทิ-เคิล รี-ดิง/", th: "การอ่านเชิงวิจารณ์", sample: "Critical reading involves analyzing stated and implied meanings." }
+        ],
+        tip: "การอ่านเชิงวิจารณ์เริ่มจากการเปิดใจทำความเข้าใจโครงสร้างเรื่องและกำหนดเป้าหมายการอ่านล่วงหน้า"
+      },
+      {
+        id: 2,
+        category: "SLIDE 2 OF 12",
+        topic: "Group Members & Unit Outline",
+        title: "Group Members & Presentation Outline",
+        subtitle: "Unit 1 Reading Foundations Overview",
+        contentHtml: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4">
+              <h3 class="text-base font-bold text-amber-400 mb-3 border-b border-slate-700 pb-2 flex items-center gap-2">
+                <i class="fa-solid fa-users"></i> สมาชิกในกลุ่ม (Group Members)
+              </h3>
+              <ul class="space-y-2 text-xs md:text-sm text-slate-200">
+                <li class="flex justify-between"><span>1. นายณัฐภัทร สมบูรณ์</span> <span class="text-amber-400 font-mono">เลขที่ 1 (หัวหน้า)</span></li>
+                <li class="flex justify-between"><span>2. นางสาวศุภิสรา วงศ์สวัสดิ์</span> <span class="text-slate-400 font-mono">เลขที่ 12</span></li>
+                <li class="flex justify-between"><span>3. นายกิตติศักดิ์ เจริญพร</span> <span class="text-slate-400 font-mono">เลขที่ 15</span></li>
+                <li class="flex justify-between"><span>4. นางสาวกานต์ดา สุขเจริญ</span> <span class="text-slate-400 font-mono">เลขที่ 24</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4">
+              <h3 class="text-base font-bold text-blue-400 mb-3 border-b border-slate-700 pb-2 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group"></i> ทักษะการอ่านใน Unit 1
+              </h3>
+              <ul class="space-y-1.5 text-xs text-slate-300">
+                <li><i class="fa-solid fa-circle-check text-green-400 mr-1.5"></i> Skimming & Scanning Strategies</li>
+                <li><i class="fa-solid fa-circle-check text-green-400 mr-1.5"></i> Stated vs. Implied Main Ideas</li>
+                <li><i class="fa-solid fa-circle-check text-green-400 mr-1.5"></i> Context Clues & Vocabulary Decoding</li>
+                <li><i class="fa-solid fa-circle-check text-green-400 mr-1.5"></i> Schema Theory & Prior Knowledge</li>
+                <li><i class="fa-solid fa-circle-check text-green-400 mr-1.5"></i> 5-Stage Reading Process & Models</li>
+              </ul>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 2:</b> แนะนำรายชื่อสมาชิกกลุ่ม ม.4 พร้อมแสดงภาพรวมของทักษะการอ่าน 6 ประการในบทที่ 1 ที่เราจะนำมาใช้วิเคราะห์บทอ่านลอยกระทง",
+        vocab: [
+          { word: "Outline", pos: "n.", ipa: "/เอาท์-ไลน์/", th: "โครงร่าง / ขอบเขตเนื้อหา", sample: "The outline shows all main topics in the lesson." },
+          { word: "Decode", pos: "v.", ipa: "/ดี-โคด/", th: "ถอดรหัส (คำศัพท์/ความหมาย)", sample: "Readers decode unfamiliar words using context." }
+        ],
+        tip: "การรับรู้โครงสร้างบทเรียนล่วงหน้าช่วยให้สมองจัดหมวดหมู่ข้อมูลใหม่ได้รวดเร็วขึ้น"
+      },
+      {
+        id: 3,
+        category: "SLIDE 3 OF 12",
+        topic: "Master Reading Passage",
+        title: "Loy Krathong: Tradition, Gratitude, and Ecological Paradox",
+        subtitle: "Full Reading Text for Strategy Application",
+        contentHtml: `
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+            <div class="md:col-span-8 bg-slate-950/80 border border-slate-800 rounded-xl p-4 space-y-3 font-en text-xs md:text-sm text-slate-200 leading-relaxed max-h-72 overflow-y-auto custom-scrollbar">
+              <p>
+                <b class="text-amber-400">Paragraph 1:</b> Loy Krathong takes place on the night of the full moon of the 12th month in the Thai lunar calendar. Rooted in ancient agricultural traditions, people gather along rivers, canals, and lakes to release decorative lotus-shaped vessels called <i>krathongs</i> into the water.
+                <button onclick="speakText('Loy Krathong takes place on the night of the full moon of the 12th month in the Thai lunar calendar. Rooted in ancient agricultural traditions, people gather along rivers to release decorative lotus-shaped vessels called krathongs.')" class="ml-1 text-xs text-amber-400 hover:underline"><i class="fa-solid fa-volume-high"></i></button>
+              </p>
+              <p>
+                <b class="text-amber-400">Paragraph 2:</b> As thousands of lighted candles drift away into the dark water, participants silently bow their heads, holding past misfortunes in their thoughts before letting go. This ritual serves to express gratitude to Phra Mae Khongkha, the Goddess of Water, while symbolically releasing anger, hatred, and bad luck.
+                <button onclick="speakText('As thousands of lighted candles drift away into the dark water, participants silently bow their heads, holding past misfortunes in their thoughts before letting go.')" class="ml-1 text-xs text-amber-400 hover:underline"><i class="fa-solid fa-volume-high"></i></button>
+              </p>
+              <p>
+                <b class="text-amber-400">Paragraph 3:</b> However, modern celebrations face severe criticism. Tons of non-biodegradable materials, such as styrofoam and plastic pins, accumulate in waterways overnight, suffocating aquatic life and clogging urban drainage systems. Consequently, environmentalists advocate for eco-conscious alternatives to preserve both heritage and nature.
+                <button onclick="speakText('However, modern celebrations face severe criticism. Tons of non-biodegradable materials accumulate in waterways overnight, suffocating aquatic life and clogging urban drainage systems.')" class="ml-1 text-xs text-amber-400 hover:underline"><i class="fa-solid fa-volume-high"></i></button>
+              </p>
+            </div>
+            <div class="md:col-span-4 space-y-3">
+              <div class="rounded-xl overflow-hidden border border-slate-700 max-h-44 shadow-md">
+                <img src="https://chineselanterns.nl/wp-content/uploads/2026/06/loy-krathong-hero.webp" alt="Loy Krathong Night" class="w-full h-full object-cover">
+              </div>
+              <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200">
+                <b class="text-amber-400 block mb-1"><i class="fa-solid fa-book-open"></i> Full Translation Summary:</b>
+                ประเพณีลอยกระทงจัดขึ้นในคืนวันเพ็ญเพื่อขอบคุณแม่พระคงคาและลอยความทุกข์โศก แต่ปัจจุบันประสบปัญหาขยะที่ไม่ย่อยสลายสร้างมลพิษทางน้ำ
+              </div>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 3 (บทอ่านหลัก):</b> แสดงบทความภาษาอังกฤษแบบเต็ม 3 ย่อหน้า ครอบคลุมเรื่องประวัติ ความเชื่อ การขอขมา และประเด็นมลพิษทางน้ำในปัจจุบัน บทอ่านนี้จะใช้เป็นตัวอย่างอ้างอิงในสไลด์ถัดๆ ไป",
+        vocab: [
+          { word: "Agricultural", pos: "adj.", ipa: "/แอก-ริ-คัล-เชอ-รัล/", th: "ทางเกษตรกรรม", sample: "Loy Krathong is rooted in ancient agricultural traditions." },
+          { word: "Misfortune", pos: "n.", ipa: "/มิส-ฟอร์-ชุน/", th: "ความเคราะห์ร้าย / โชคร้าย", sample: "People float krathongs to release past misfortunes." },
+          { word: "Gratitude", pos: "n.", ipa: "/แกร-ทิ-ทูด/", th: "ความสำนึกในบุญคุณ", sample: "The ritual expresses gratitude to the Goddess of Water." },
+          { word: "Non-biodegradable", pos: "adj.", ipa: "/นอน-ไบ-โอ-ดี-เกร-ดับ-เบิล/", th: "ไม่ย่อยสลายตามธรรมชาติ", sample: "Styrofoam is a non-biodegradable material." },
+          { word: "Suffocate", pos: "v.", ipa: "/ซัฟ-โฟ-เคท/", th: "ทำให้ขาดอากาศหายใจ", sample: "Plastic waste suffocates aquatic animals." }
+        ],
+        tip: "ควรอ่านบทความรอบแรกแบบกวาดสายตา (Skimming) ก่อน เพื่อเข้าใจภาพรวม แล้วจึงอ่านเจาะลึกรายละเอียด"
+      },
+      {
+        id: 4,
+        category: "SLIDE 4 OF 12",
+        topic: "Reading Strategy 1",
+        title: "Skimming & Scanning Techniques",
+        subtitle: "Fast Reading Strategies for Overview & Specific Details",
+        contentHtml: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+            <div class="space-y-3">
+              <div class="bg-blue-950/40 border-l-4 border-blue-500 p-3 rounded-r-xl">
+                <h4 class="text-sm font-bold text-blue-400 flex items-center justify-between">
+                  <span><i class="fa-solid fa-eye mr-1.5"></i> Skimming (การอ่านเอาใจความหลัก)</span>
+                  <button onclick="speakText('Skimming is reading quickly for the main idea without focusing on small details.')" class="text-xs text-blue-300 hover:underline"><i class="fa-solid fa-volume-high"></i></button>
+                </h4>
+                <p class="text-xs text-slate-300 mt-1 font-en">Reading quickly for the main idea without focusing on small details.</p>
+                <p class="text-xs text-slate-400 mt-1"><b>ตัวอย่าง:</b> กวาดสายตาอ่านย่อหน้าที่ 1-3 พบว่าเรื่องนี้เกี่ยวกับ "ประเพณีลอยกระทงและผลกระทบต่อสิ่งแวดล้อม"</p>
+              </div>
+
+              <div class="bg-amber-950/40 border-l-4 border-amber-500 p-3 rounded-r-xl">
+                <h4 class="text-sm font-bold text-amber-400 flex items-center justify-between">
+                  <span><i class="fa-solid fa-crosshair mr-1.5"></i> Scanning (การอ่านหาข้อมูลเฉพาะ)</span>
+                  <button onclick="speakText('Scanning is searching for specific facts, dates, or keywords like 12th month or styrofoam.')" class="text-xs text-amber-300 hover:underline"><i class="fa-solid fa-volume-high"></i></button>
+                </h4>
+                <p class="text-xs text-slate-300 mt-1 font-en">Searching for specific facts, dates, or keywords.</p>
+                <p class="text-xs text-slate-400 mt-1"><b>ตัวอย่าง:</b> กวาดสายตาหาตัวเลข "12th month" หรือคำว่า "styrofoam" ได้ทันทีโดยไม่ต้องอ่านทุกคำ</p>
+              </div>
+            </div>
+
+            <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-4 text-center space-y-2">
+              <i class="fa-solid fa-bolt-lightning text-amber-400 text-3xl"></i>
+              <h4 class="text-sm font-bold text-slate-100">Speed vs Accuracy Balance</h4>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                การใช้ <b>Skimming</b> ช่วยประหยัดเวลาในการหา Main Idea ส่วน <b>Scanning</b> ใช้เมื่อต้องการตอบคำถามตัวเลขหรือคำเฉพาะ
+              </p>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 4:</b> สรุป 2 เทคนิคการอ่านเร็ว ได้แก่ Skimming (อ่านข้ามๆ เพื่อจับใจความหลัก) และ Scanning (กวาดสายตาเพื่อค้นหาคำหรือตัวเลขเฉพาะ)",
+        vocab: [
+          { word: "Skim", pos: "v.", ipa: "/สคิม/", th: "อ่านกวาดสายตาอย่างเร็ว", sample: "Skim the text to find the general main idea." },
+          { word: "Scan", pos: "v.", ipa: "/สแคน/", th: "อ่านกวาดสายตาหาคำเฉพาะ", sample: "Scan the paragraph to find the date of the festival." },
+          { word: "Specific", pos: "adj.", ipa: "/สเป-ซิ-ฟิก/", th: "เฉพาะเจาะจง", sample: "Scanning targets specific numbers and proper nouns." }
+        ],
+        tip: "อย่าพยายามแปลทุกคำเมื่อ Skimming ให้มองหาคำคำนามและคำกริยาหลักในประโยคแทน"
+      },
+      {
+        id: 5,
+        category: "SLIDE 5 OF 12",
+        topic: "Reading Strategy 2",
+        title: "Stated vs. Implied Main Idea",
+        subtitle: "Finding Direct Statements vs. Inferring Hidden Messages",
+        contentHtml: `
+          <div class="space-y-3">
+            <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-xs md:text-sm font-en text-slate-200">
+              <b class="text-amber-400 block mb-1">Passage Excerpt (Paragraph 3):</b>
+              "Millions of krathongs are released into waterways. While made with good intentions, tons of styrofoam and plastic pins accumulate, suffocating fish and clogging city drainage systems within hours."
+              <button onclick="speakText('Millions of krathongs are released into waterways. Tons of styrofoam and plastic accumulate, suffocating fish and clogging city drainage systems.')" class="ml-2 text-xs text-amber-400 hover:underline"><i class="fa-solid fa-volume-high"></i> Listen Excerpt</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-blue-950/30 border border-blue-500/30 rounded-xl p-3">
+                <span class="text-xs font-bold text-blue-400 uppercase">Stated Main Idea</span>
+                <p class="text-xs text-slate-300 mt-1">ประโยคใจความสำคัญที่ผู้เขียน<b>ระบุไว้ตรงๆ</b> ในบทอ่าน เช่น "Modern celebrations face severe criticism."</p>
+              </div>
+
+              <div class="bg-amber-950/30 border border-amber-500/30 rounded-xl p-3">
+                <span class="text-xs font-bold text-amber-400 uppercase">Implied Main Idea (ใจความแฝง)</span>
+                <p class="text-xs text-slate-300 mt-1">ใจความที่<b>ไม่ได้เขียนไว้ตรงๆ</b> แต่นักเรียนต้องสรุปเอง</p>
+                <div class="mt-2 bg-amber-500/10 border border-amber-500/20 rounded p-2 text-xs text-amber-200 font-en font-medium">
+                  Implied Point: "Traditional celebration methods must be altered because they cause severe ecological damage."
+                </div>
+              </div>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 5:</b> เปรียบเทียบระหว่าง Stated Main Idea (บอกไว้ชัดเจน) กับ Implied Main Idea (ซ่อนอยู่ ต้องอนุมานเอง) โดยยกตัวอย่างประโยคกระทงสร้างมลพิษ ซึ่งแฝงข้อความว่า 'ประเพณีลอยกระทงแบบเดิมต้องได้รับการปรับเปลี่ยน'",
+        vocab: [
+          { word: "Stated", pos: "adj.", ipa: "/สเท-เทด/", th: "ที่ระบุไว้ชัดเจน", sample: "A stated main idea is directly written in the text." },
+          { word: "Implied", pos: "adj.", ipa: "/อิม-พลายด์/", th: "ที่แฝงไว้ / ไม่ได้บอกตรงๆ", sample: "An implied main idea requires readers to infer." },
+          { word: "Accumulate", pos: "v.", ipa: "/อะ-คิว-มิว-เลท/", th: "ทับถม / สะสม", sample: "Plastic pins accumulate in rivers overnight." }
+        ],
+        tip: "หากไม่พบประโยคสรุปในบรรทัดแรกหรือบรรทัดสุดท้าย แสดงว่าบทอ่านนั้นเป็น Implied Main Idea"
+      },
+      {
+        id: 6,
+        category: "SLIDE 6 OF 12",
+        topic: "Reading Strategy 3",
+        title: "Context Clues & Vocabulary Decoding",
+        subtitle: "Guessing Meaning of Unfamiliar Words from Context",
+        contentHtml: `
+          <div class="space-y-4">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+              <span class="text-xs font-bold text-slate-400 block mb-1">Passage Sentence:</span>
+              <p class="text-sm font-en text-slate-100">
+                "Traditionally, krathongs were made of natural banana leaves. However, modern shifts toward <span class="bg-amber-500/20 text-amber-400 border border-amber-500/40 px-2 py-0.5 rounded font-bold">biodegradable</span> materials help prevent long-term river pollution."
+                <button onclick="speakText('Traditionally, krathongs were made of natural banana leaves. However, modern shifts toward biodegradable materials help prevent long-term river pollution.')" class="ml-2 text-xs text-amber-400"><i class="fa-solid fa-volume-high"></i></button>
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3">
+                <h4 class="text-xs font-bold text-amber-400 mb-1">Target Word & Meaning</h4>
+                <p class="text-sm font-bold font-en text-slate-100">Biodegradable</p>
+                <p class="text-xs text-slate-300 mt-1">/ไบ-โอ-ดี-เกร-ดับ-เบิล/ = ย่อยสลายได้ตามธรรมชาติ (Capable of being decomposed by natural agents)</p>
+              </div>
+
+              <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3">
+                <h4 class="text-xs font-bold text-green-400 mb-1">How Context Clues Work</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  บริบทคำว่า <i>"natural banana leaves"</i> และคำเชื่อม <i>"prevent river pollution"</i> ช่วยใบ้ว่าคำนี้หมายถึงวัสดุที่เป็นมิตรต่อสิ่งแวดล้อม โดยไม่ต้องเปิดพจนานุกรม
+                </p>
+              </div>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 6:</b> แสดงการใช้ Context Clues (บริบทรอบข้าง) ในการเดาความหมายของคำศัพท์ยาก เช่น คำว่า 'biodegradable' โดยสังเกตคำแวดล้อมอย่าง 'natural banana leaves' และ 'prevent pollution'",
+        vocab: [
+          { word: "Context Clue", pos: "n.", ipa: "/คอน-เทกซ์ คลู/", th: "เบาะแสจากบริบท", sample: "Use context clues to guess word meanings." },
+          { word: "Decompose", pos: "v.", ipa: "/ดี-คอม-โพส/", th: "ย่อยสลาย / เน่าเปื่อย", sample: "Organic matter decomposes naturally." },
+          { word: "Pollution", pos: "n.", ipa: "/โพ-ลู-ชัน/", th: "มลพิษ / สภาวะเป็นพิษ", sample: "Biodegradable materials prevent long-term pollution." }
+        ],
+        tip: "สังเกตคำเชื่อมตรงข้าม เช่น 'However' หรือ 'In contrast' เพราะมักจะให้เบาะแสความหมายตรงกันข้าม"
+      },
+      {
+        id: 7,
+        category: "SLIDE 7 OF 12",
+        topic: "Reading Foundation",
+        title: "Schema Theory (Background Knowledge)",
+        subtitle: "How Prior Knowledge Helps Reading Comprehension",
+        contentHtml: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+            <div class="space-y-3">
+              <div class="bg-purple-950/40 border border-purple-500/30 rounded-xl p-4 space-y-2">
+                <h4 class="text-sm font-bold text-purple-300 flex items-center gap-2">
+                  <i class="fa-solid fa-brain"></i> What is Schema?
+                </h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  <b>Schema (โครงสร้างความรู้เดิม):</b> กรอบความรู้ ประสบการณ์ และวัฒนธรรมที่บันทึกอยู่ในสมองของผู้อ่าน ซึ่งช่วยในการตีความและเข้าใจเรื่องใหม่ได้เร็วยิ่งขึ้น
+                </p>
+              </div>
+
+              <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 text-xs text-slate-300 space-y-1">
+                <b class="text-amber-400 block">Passage Example:</b>
+                <p class="font-en italic">"Lotus-shaped vessels drifted along the river under the full moon."</p>
+                <p class="text-slate-400"><b>Schema Activated:</b> เมื่ออ่านคำว่า "Lotus-shaped vessels" สมองคนไทยจะดึงภาพ "กระทงทรงดอกบัว" ออกมาทันที</p>
+              </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center space-y-3">
+              <div class="inline-block p-3 bg-purple-500/10 rounded-full text-purple-400 text-3xl">
+                <i class="fa-solid fa-lightbulb"></i>
+              </div>
+              <h4 class="text-sm font-bold text-slate-100">Cultural Schema Advantage</h4>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                นักเรียนไทยรู้จัก "กระทง" และ "แม่พระคงคา" อยู่แล้ว จึงเข้าใจบริบทของบทอ่านนี้ได้เร็วกว่าผู้อ่านชาวต่างชาติที่ไม่เคยรู้จักเทศกาลนี้
+              </p>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 7:</b> อธิบายทฤษฎี Schema (ความรู้เดิมในสมอง) ซึ่งช่วยให้ผู้อ่านเข้าใจบทความได้เร็วขึ้น เช่น นักเรียนไทยคุ้นเคยกับวันลอยกระทง สมองจึงสร้างภาพกระทงและพิธีกรรมตามได้ทันที",
+        vocab: [
+          { word: "Schema", pos: "n.", ipa: "/สกี-มา/", th: "โครงสร้างความรู้เดิมในสมอง", sample: "Schema theory explains how prior knowledge aids reading." },
+          { word: "Prior Knowledge", pos: "n.", ipa: "/ไพร-เออร์ นอ-เลจ/", th: "ความรู้ที่มีอยู่ก่อนหน้า", sample: "Prior knowledge about Thai culture makes reading easier." },
+          { word: "Activate", pos: "v.", ipa: "/แอก-ทิ-เวท/", th: "กระตุ้นให้ทำงาน", sample: "Pictures activate our schema before reading." }
+        ],
+        tip: "ก่อนเริ่มอ่านบทความ ให้ลองถามตัวเองว่า 'เรามีความรู้อะไรเกี่ยวกับเรื่องนี้อยู่แล้วบ้าง?'"
+      },
+      {
+        id: 8,
+        category: "SLIDE 8 OF 12",
+        topic: "Reading Foundation",
+        title: "Reading Models (Bottom-Up, Top-Down, Interactive)",
+        subtitle: "Cognitive Models of Reading Process",
+        contentHtml: `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center space-y-2">
+              <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-2 py-0.5 rounded">MODEL 1</span>
+              <h4 class="text-xs font-bold text-slate-100 font-en">Bottom-Up Model</h4>
+              <p class="text-xs text-slate-300">อ่านจากส่วนย่อยไปใหญ่ (Letters → Words → Sentences)</p>
+              <p class="text-[11px] text-slate-400"><b>ตัวอย่าง:</b> การสะกดคำว่า K-r-a-t-h-o-n-g หรือการแปลศัพท์ทีละคำ</p>
+            </div>
+
+            <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center space-y-2">
+              <span class="bg-amber-500/20 text-amber-400 text-xs font-bold px-2 py-0.5 rounded">MODEL 2</span>
+              <h4 class="text-xs font-bold text-slate-100 font-en">Top-Down Model</h4>
+              <p class="text-xs text-slate-300">ใช้บริบทและความรู้เดิม (Schema) คาดเดานำเรื่องก่อนอ่าน</p>
+              <p class="text-[11px] text-slate-400"><b>ตัวอย่าง:</b> การดูรูปภาพกระทงแล้วเดาเรื่องล่วงหน้าก่อนอ่าน</p>
+            </div>
+
+            <div class="bg-green-950/40 border border-green-500/40 rounded-xl p-3 text-center space-y-2">
+              <span class="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-0.5 rounded">MOST EFFECTIVE</span>
+              <h4 class="text-xs font-bold text-green-300 font-en">Interactive Model</h4>
+              <p class="text-xs text-slate-300">ผสมผสานทั้งถอดรหัสคำศัพท์และใช้ความรู้เดิมพร้อมกัน</p>
+              <p class="text-[11px] text-green-200 font-medium">ทำให้เกิดการอ่านอย่างมีประสิทธิภาพและเข้าใจลึกซึ้งสูงสุด</p>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 8:</b> สรุปโมเดลการอ่าน 3 แบบ ได้แก่ Bottom-Up (อ่านสะกดศัพท์จากเล็กไปใหญ่), Top-Down (ใช้ความรู้เดิมเดาภาพรวม) และ Interactive Model (การรวมทั้งสองวิธีเข้าด้วยกัน ซึ่งได้ผลดีที่สุด)",
+        vocab: [
+          { word: "Bottom-Up", pos: "adj.", ipa: "/บอท-ทอม อัพ/", th: "จากล่างขึ้นบน (ถอดรหัสจากอักขระสู่ความหมาย)", sample: "Bottom-up model focuses on letters and phonics." },
+          { word: "Top-Down", pos: "adj.", ipa: "/ทอป ดาวน์/", th: "จากบนลงล่าง (ใช้มโนทัศน์เดาความหมาย)", sample: "Top-down reading relies heavily on background knowledge." },
+          { word: "Interactive", pos: "adj.", ipa: "/อิน-เทอร์-แอก-ทีฟ/", th: "ที่ปฏิสัมพันธ์/ทำงานร่วมกัน", sample: "The interactive model combines bottom-up and top-down skills." }
+        ],
+        tip: "ผู้อ่านที่เก่งจะใช้ Interactive Model โดยถอดรหัสคำศัพท์ไปพร้อมๆ กับการตั้งคำถามและคิดตาม"
+      },
+      {
+        id: 9,
+        category: "SLIDE 9 OF 12",
+        topic: "Reading Process",
+        title: "The 5-Stage Reading Process Applied",
+        subtitle: "Five Steps for Systematic Reading",
+        contentHtml: `
+          <div class="space-y-2 text-xs">
+            <div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl flex items-center gap-3">
+              <span class="bg-amber-500 text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+              <div><b class="text-amber-400 font-en">Pre-reading (ขั้นก่อนอ่าน):</b> ดูรูปภาพลอยกระทง ตั้งวัตถุประสงค์ และดึง Schema เดิมขึ้นมา</div>
+            </div>
+            <div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl flex items-center gap-3">
+              <span class="bg-amber-500 text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+              <div><b class="text-amber-400 font-en">Reading (ขั้นระหว่างอ่าน):</b> อ่านบทความ ใช้ Skimming, Scanning และ Context Clues ถอดรหัสความหมาย</div>
+            </div>
+            <div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl flex items-center gap-3">
+              <span class="bg-amber-500 text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
+              <div><b class="text-amber-400 font-en">Responding (ขั้นตอบสนอง):</b> ขีดเส้นใต้ประโยคสำคัญ สรุปย่อ หรืออภิปรายกับเพื่อน</div>
+            </div>
+            <div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl flex items-center gap-3">
+              <span class="bg-amber-500 text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">4</span>
+              <div><b class="text-amber-400 font-en">Exploring (ขั้นสำรวจ):</b> เจาะลึกโครงสร้างประโยค วิเคราะห์ Fact vs. Opinion และศัพท์ใหม่</div>
+            </div>
+            <div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl flex items-center gap-3">
+              <span class="bg-amber-500 text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">5</span>
+              <div><b class="text-amber-400 font-en">Applying (ขั้นประยุกต์ใช้):</b> นำเรื่องราวไปจัดทำสไลด์นำเสนอ หรือเสนอทางออกเรื่องกระทงรักษ์โลก</div>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 9:</b> กระบวนการอ่าน 5 ขั้นตอน (Pre-reading, Reading, Responding, Exploring, Applying) ซึ่งช่วยให้นักเรียนเรียนรู้อย่างเป็นระบบตั้งแต่เริ่มสนใจบทความจนถึงขั้นนำไปประยุกต์ใช้",
+        vocab: [
+          { word: "Pre-reading", pos: "n.", ipa: "/พรี-รี-ดิง/", th: "ขั้นก่อนการอ่าน", sample: "Pre-reading activates student schema." },
+          { word: "Exploring", pos: "n.", ipa: "/เอ็กซ์-พลอ-ริง/", th: "ขั้นสำรวจและวิเคราะห์เจาะลึก", sample: "Exploring involves examining grammar and tone." },
+          { word: "Applying", pos: "n.", ipa: "/แอพ-พลาย-อิง/", th: "ขั้นประยุกต์ใช้ความรู้", sample: "Applying means creating solutions from the lesson." }
+        ],
+        tip: "อย่าข้ามขั้น Responding และ Applying เพราะสองขั้นนี้ทำให้การจำความหมายคงทนที่สุด"
+      },
+      {
+        id: 10,
+        category: "SLIDE 10 OF 12",
+        topic: "Reading Strategy 4",
+        title: "Making Inferences (Reading Between the Lines)",
+        subtitle: "Understanding Hidden Meaning from Textual Clues",
+        contentHtml: `
+          <div class="space-y-3">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs md:text-sm font-en text-slate-200">
+              <b class="text-amber-400 block mb-1">Passage Sentence (Paragraph 2):</b>
+              "As thousands of lighted candles drift away into dark water, participants silently bow their heads, holding past misfortunes in their thoughts before letting go."
+              <button onclick="speakText('As thousands of lighted candles drift away into dark water, participants silently bow their heads, holding past misfortunes in their thoughts before letting go.')" class="ml-2 text-xs text-amber-400"><i class="fa-solid fa-volume-high"></i></button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-purple-950/40 border border-purple-500/30 rounded-xl p-3">
+                <span class="text-xs font-bold text-purple-300 uppercase">Implicit Meaning (สิ่งที่ซ่อนอยู่)</span>
+                <p class="text-xs text-slate-300 mt-1">
+                  แม้ข้อความไม่ได้บอกตรงๆ แต่สามารถ<b>อนุมาน (Infer)</b> ได้ว่า การลอยกระทงเป็นพิธีกรรมทางจิตวิทยาในการปล่อยวางความทุกข์และความโศกเศร้าในอดีต
+                </p>
+              </div>
+
+              <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3">
+                <span class="text-xs font-bold text-amber-400 uppercase">Clues Used for Inference</span>
+                <p class="text-xs text-slate-300 mt-1">
+                  ใช้เบาะแสคำว่า <i>"silently bow"</i> (ก้มหัวอย่างสงบ) และ <i>"letting go"</i> (ปล่อยวาง) เพื่ออ่านทะลุตัวอักษร (Reading between the lines)
+                </p>
+              </div>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 10:</b> การอ่านตีความหรือการอนุมาน (Making Inferences) คือการอ่านทะลุตัวอักษรเพื่อค้นหาความหมายที่ผู้เขียนไม่ได้บอกตรงๆ โดยอิงจากเบาะแสในข้อความ",
+        vocab: [
+          { word: "Infer", pos: "v.", ipa: "/อิน-เฟอร์/", th: "อนุมาน / ตีความจากเบาะแส", sample: "Readers infer that the ritual brings psychological relief." },
+          { word: "Reading between the lines", pos: "idiom", ipa: "/รี-ดิง บี-ทวีน เดอะ ไลน์ส/", th: "การอ่านเข้าใจความหมายที่ซ่อนอยู่", sample: "Critical readers excel at reading between the lines." }
+        ],
+        tip: "การอนุมานที่ดีต้องมีหลักฐานหรือคำเบาะแสจากบทความสนับสนุนเสมอ ไม่ใช่การเดาลอยๆ"
+      },
+      {
+        id: 11,
+        category: "SLIDE 11 OF 12",
+        topic: "Reading Strategy 5",
+        title: "Author's Purpose, Tone & Fact vs. Opinion",
+        subtitle: "Evaluating Text Authenticity and Perspective",
+        contentHtml: `
+          <div class="space-y-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-green-950/30 border border-green-500/30 rounded-xl p-3">
+                <span class="text-xs font-bold text-green-400 uppercase flex items-center justify-between">
+                  <span><i class="fa-solid fa-check-circle mr-1"></i> FACT (ข้อเท็จจริง)</span>
+                  <button onclick="speakText('Loy Krathong takes place on the full moon of the 12th month in the Thai lunar calendar.')" class="text-xs text-green-300"><i class="fa-solid fa-volume-high"></i></button>
+                </span>
+                <p class="text-xs font-en text-slate-200 mt-1">"Loy Krathong takes place on the full moon of the 12th month."</p>
+                <p class="text-xs text-slate-400 mt-1"><b>เหตุผล:</b> เป็นจริงเสมอ ตรวจสอบได้ตามหลักฐานทางดาราศาสตร์</p>
+              </div>
+
+              <div class="bg-orange-950/30 border border-orange-500/30 rounded-xl p-3">
+                <span class="text-xs font-bold text-orange-400 uppercase flex items-center justify-between">
+                  <span><i class="fa-solid fa-comment-dots mr-1"></i> OPINION (ข้อคิดเห็น)</span>
+                  <button onclick="speakText('Loy Krathong is the most visually stunning festival in Southeast Asia.')" class="text-xs text-orange-300"><i class="fa-solid fa-volume-high"></i></button>
+                </span>
+                <p class="text-xs font-en text-slate-200 mt-1">"Loy Krathong is the most visually stunning festival in Asia."</p>
+                <p class="text-xs text-slate-400 mt-1"><b>เหตุผล:</b> ใช้คำแสดงความรู้สึก <i>"most visually stunning"</i> ตัดสินตามมุมมองบุคคล</p>
+              </div>
+            </div>
+
+            <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 text-xs flex justify-between items-center">
+              <div>
+                <b class="text-amber-400">Author's Purpose:</b> To Inform & Persuade (ให้ข้อมูลและกระตุ้นเตือนเรื่องสิ่งแวดล้อม)
+              </div>
+              <div>
+                <b class="text-amber-400">Author's Tone:</b> Appreciative yet Concerned (ชื่นชมมรดกวัฒนธรรม แต่กังวลเรื่องมลพิษ)
+              </div>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 11:</b> แยกแยะระหว่างข้อเท็จจริง (Fact - พิสูจน์ได้) กับข้อคิดเห็น (Opinion - ความรู้สึกส่วนตัว) พร้อมวิเคราะห์วัตถุประสงค์ (Author's Purpose) และน้ำเสียงของผู้เขียน (Author's Tone)",
+        vocab: [
+          { word: "Objective", pos: "adj.", ipa: "/ออบ-เจก-ทีฟ/", th: "ที่เป็นกลาง / อิงข้อเท็จจริง", sample: "Facts provide objective information." },
+          { word: "Subjective", pos: "adj.", ipa: "/ซับ-เจก-ทีฟ/", th: "อิงความรู้สึกส่วนตน", sample: "Opinions are subjective views." },
+          { word: "Persuade", pos: "v.", ipa: "/เพอร์-สเวด/", th: "โน้มน้าวใจ", sample: "The author aims to persuade readers to use eco-friendly materials." }
+        ],
+        tip: "คำคุณศัพท์เปรียบเทียบขั้นสุด เช่น 'best', 'most beautiful' มักเป็นสัญญาณของข้อคิดเห็น (Opinion)"
+      },
+      {
+        id: 12,
+        category: "SLIDE 12 OF 12",
+        topic: "Critical Synthesis & Q&A",
+        title: "Critical Reading Synthesis & Conclusion",
+        subtitle: "Solving the Paradox: Eco-conscious Traditions",
+        contentHtml: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+            <div class="space-y-3">
+              <div class="bg-red-950/30 border border-red-500/30 rounded-xl p-3 text-xs space-y-1">
+                <b class="text-red-400 block font-en">Critical Inquiry (การตั้งคำถามเชิงวิจารณ์):</b>
+                <p class="text-slate-200">"ย้อนย้อนศรหรือไม่? ที่เราลอยกระทงเพื่อขอขมาแม่น้ำ แต่กลับสร้างขยะจำนวนมหาศาลลงในแม่น้ำ"</p>
+              </div>
+
+              <div class="bg-green-950/30 border border-green-500/30 rounded-xl p-3 text-xs space-y-1">
+                <b class="text-green-400 block font-en">Synthesized Solutions (ทางออกที่สังเคราะห์):</b>
+                <p class="text-slate-200">ผู้อ่านเชิงวิจารณ์เสนอทางออก เช่น การลอยกระทงดิจิทัล (Digital Floating), การใช้กระทงน้ำแข็ง หรือนโยบาย 1 ครอบครัว 1 กระทง</p>
+              </div>
+            </div>
+
+            <div class="bg-slate-900 border border-amber-500/30 rounded-xl p-4 text-center space-y-3">
+              <h3 class="text-lg font-extrabold text-amber-400 font-en">Thank You for Your Attention!</h3>
+              <p class="text-xs text-slate-300">
+                การอ่านเชิงวิจารณ์ใน Unit 1 ช่วยให้เราเข้าใจภาษาอังกฤษอย่างลึกซึ้ง และประยุกต์ใช้แก้ปัญหาในชีวิตจริงได้
+              </p>
+              <button onclick="speakText('Thank you for your attention! Are there any questions or comments?')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs px-4 py-2 rounded-xl transition shadow-lg">
+                <i class="fa-solid fa-comments mr-1"></i> Q&A / Ask Questions
+              </button>
+            </div>
+          </div>
+        `,
+        explanation: "<b>คำอธิบายสไลด์ที่ 12 (สรุปและ Q&A):</b> ขั้นสูงสุดของการอ่านเชิงวิจารณ์คือการสังเคราะห์ทางออก (Synthesis) สำหรับปัญหาความย้อนแย้งของการลอยกระทง พร้อมสรุปประโยชน์ของการประยุกต์ใช้ทักษะจาก Unit 1",
+        vocab: [
+          { word: "Synthesis", pos: "n.", ipa: "/ซิน-เท-ซิส/", th: "การสังเคราะห์ทางออก / รวบรวมแนวคิด", sample: "Critical reading leads to solution synthesis." },
+          { word: "Paradox", pos: "n.", ipa: "/แพ-ระ-ดอกซ์/", th: "ความย้อนแย้งในตัวเอง", sample: "Floating plastic to show gratitude is an ecological paradox." }
+        ],
+        tip: "การอ่านเชิงวิจารณ์ไม่ได้สิ้นสุดที่การเข้าใจบทความ แต่จบลงเมื่อเรานำข้อคิดไปประยุกต์ใช้ปรับปรุงสังคม"
+      }
+    ];
+
+    // STATE VARIABLES
+    let currentSlideIndex = 0;
+    let playbackSpeed = 1.0;
+    const synth = window.speechSynthesis;
+
+    // INITIALIZE APP
+    window.addEventListener('DOMContentLoaded', () => {
+      renderSlide(currentSlideIndex);
+    });
+
+    // RENDER SLIDE CONTENT & VOCABULARY
+    function renderSlide(index) {
+      const slide = slidesData[index];
+      
+      // Update Header & Category
+      document.getElementById('slideCategory').innerText = slide.category;
+      document.getElementById('slideTopic').innerText = slide.topic;
+      
+      // Inject Slide HTML
+      const container = document.getElementById('slideContent');
+      container.innerHTML = `
+        <div class="space-y-4">
+          <div class="border-b border-slate-800 pb-2 flex justify-between items-start">
+            <div>
+              <h2 class="text-xl md:text-2xl font-bold text-slate-50 font-en">${slide.title}</h2>
+              <p class="text-xs text-amber-400 font-medium font-en mt-0.5">${slide.subtitle}</p>
+            </div>
+            <button onclick="speakText('${slide.title.replace(/'/g, "\\'")}')" class="text-amber-400 hover:text-amber-300 p-2 rounded-lg bg-slate-800 border border-slate-700 transition" title="Listen Title">
+              <i class="fa-solid fa-volume-high text-sm"></i>
+            </button>
+          </div>
+          ${slide.contentHtml}
+        </div>
+      `;
+
+      // Update Slide Explanation
+      document.getElementById('slideExplanation').innerHTML = slide.explanation;
+
+      // Update Strategy Tip
+      document.getElementById('strategyTip').innerText = slide.tip;
+
+      // Render Vocab Cards
+      renderVocabList(slide.vocab);
+
+      // Render Pagination Dots
+      renderPaginationDots();
+
+      // Button State Control
+      document.getElementById('prevBtn').disabled = (index === 0);
+      document.getElementById('nextBtn').disabled = (index === slidesData.length - 1);
+    }
+
+    // RENDER VOCABULARY LIST
+    function renderVocabList(vocabArray) {
+      const vocabContainer = document.getElementById('vocabList');
+      document.getElementById('vocabCount').innerText = `${vocabArray.length} Words`;
+
+      if (!vocabArray || vocabArray.length === 0) {
+        vocabContainer.innerHTML = `<p class="text-xs text-slate-500 italic text-center py-4">ไม่มีคำศัพท์เน้นพิเศษในหน้านี้</p>`;
+        return;
+      }
+
+      vocabContainer.innerHTML = vocabArray.map(item => `
+        <div class="bg-slate-800/70 border border-slate-700/70 rounded-xl p-3 hover:border-amber-500/40 transition space-y-1.5">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="font-bold text-sm text-slate-100 font-en">${item.word}</span>
+              <span class="text-[11px] text-amber-400 font-mono ml-1.5">${item.pos}</span>
+            </div>
+            <button onclick="speakText('${item.word}')" class="text-xs text-amber-400 hover:text-amber-300 bg-amber-500/10 p-1.5 rounded-md border border-amber-500/20 transition">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+          </div>
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-400 font-mono">${item.ipa}</span>
+            <span class="text-amber-300 font-medium">${item.th}</span>
+          </div>
+          ${item.sample ? `<p class="text-[11px] text-slate-400 font-en italic border-t border-slate-700/50 pt-1 mt-1">"${item.sample}"</p>` : ''}
+        </div>
+      `).join('');
+    }
+
+    // RENDER PAGINATION DOTS
+    function renderPaginationDots() {
+      const container = document.getElementById('dotsContainer');
+      container.innerHTML = slidesData.map((_, i) => `
+        <button onclick="goToSlide(${i})" class="w-2.5 h-2.5 rounded-full transition-all ${i === currentSlideIndex ? 'bg-amber-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}"></button>
+      `).join('');
+    }
+
+    // SLIDE NAVIGATION CONTROLS
+    function nextSlide() {
+      if (currentSlideIndex < slidesData.length - 1) {
+        stopSpeech();
+        currentSlideIndex++;
+        renderSlide(currentSlideIndex);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlideIndex > 0) {
+        stopSpeech();
+        currentSlideIndex--;
+        renderSlide(currentSlideIndex);
+      }
+    }
+
+    function goToSlide(index) {
+      stopSpeech();
+      currentSlideIndex = index;
+      renderSlide(currentSlideIndex);
+    }
+
+    // TEXT TO SPEECH (TTS) LOGIC
+    function speakText(text, lang = 'en-US') {
+      if (!('speechSynthesis' in window)) {
+        alert('เบราว์เซอร์ของคุณไม่รองรับระบบเสียงอ่าน Text-to-Speech');
+        return;
+      }
+      stopSpeech();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang;
+      utterance.rate = playbackSpeed;
+
+      // Try to find a natural voice
+      const voices = synth.getVoices();
+      const naturalVoice = voices.find(v => v.lang.includes(lang.slice(0, 2)) && v.name.includes('Natural')) || 
+                           voices.find(v => v.lang.includes(lang.slice(0, 2)));
+      if (naturalVoice) utterance.voice = naturalVoice;
+
+      synth.speak(utterance);
+    }
+
+    function speakSlideTitle() {
+      const slide = slidesData[currentSlideIndex];
+      speakText(`${slide.title}. ${slide.subtitle}`);
+    }
+
+    function speakExplanation() {
+      const rawText = document.getElementById('slideExplanation').innerText;
+      speakText(rawText, 'th-TH');
+    }
+
+    function stopSpeech() {
+      if (synth.speaking) {
+        synth.cancel();
+      }
+    }
+
+    function toggleAudioSpeed() {
+      if (playbackSpeed === 1.0) playbackSpeed = 0.8;
+      else if (playbackSpeed === 0.8) playbackSpeed = 1.2;
+      else playbackSpeed = 1.0;
+
+      document.getElementById('speedBtn').querySelector('span').innerText = `Speed: ${playbackSpeed}x`;
+    }
+
+    // Keyboard Arrow Controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+  </script>
+</body>
+</html>
